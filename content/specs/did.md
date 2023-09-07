@@ -86,9 +86,11 @@ It is crucial to validate the handle bidirectionally, by resolving the handle to
 
 The DID is the primary account identifier, and an account whose DID document does not contain a valid and confirmed handle can still, in theory, participate in the atproto ecosystem. Software should be careful to either not display any handle for such account, or obviously indicate that any handle associated with it is invalid.
 
-The public **signing key** for the account is found under the `verificationMethod` array, in an object with `id` matching `#atproto`, and the `controller` matching the DID itself. The first valid atproto signing key in the array should be used, and any others ignored. The `type` field will indicate the cryptographic curve type, and the `publicKeyMultibase` field will be the public key in multibase encoding. See below for details for parsing these fields.
+The public **[signing key](/guides/overview#account-portability)** for the account is found under the `verificationMethod` array, in an object with `id` matching `#atproto`, and the `controller` matching the DID itself. The first valid atproto signing key in the array should be used, and any others ignored. The `type` field will indicate the cryptographic curve type, and the `publicKeyMultibase` field will be the public key in multibase encoding. [See below for details for parsing these fields.](#public-key-encoding)
 
 A valid signing key is required for atproto functionality, and an account with no valid key in their DID document is broken.
+
+The public **[recovery key](/guides/overview#account-portability)** for the account is found under the `rotationKeys` array, which contains one or more string public keys in multibase encoding. It's recommended not to include the signing key.
 
 The **PDS service network location** for the account is found under the `service` array, with `id` matching `#atproto_pds`, and `type` matching `AtprotoPersonalDataServer`. The first matching entry in the array should be used, and any others ignored. The `serviceEndpoint` field must contain an HTTPS URL of server. It should contain only the URI scheme (`http` or `https`), hostname, and optional port number, not any "userinfo", path prefix, or other components.
 
